@@ -1,6 +1,6 @@
 {
-  "name": "Campus Lost & Found",
-  "description": "A centralized, trusted campus Lost & Found management platform with secure ownership verification, category & location discovery, and role-based workflows for students, staff, and administrators.",
+  "name": "Campus Lost and Found System",
+  "description": "A frontend-only Campus Lost and Found management portal simulating a relational database with localStorage, foreign key integrity, and role-based workflows.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
