@@ -1,9 +1,4 @@
-/**
- * src/App.jsx
- * Root router using HashRouter so browser refreshes never 404 on static hosting.
- */
-
-import React from 'react';
+import React, { useEffect } from 'react';
 import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './utils/auth.js';
 import { ToastProvider } from './components/Toast.jsx';
@@ -22,13 +17,21 @@ import MyClaims from './pages/MyClaims.jsx';
 import AdminDashboard from './pages/AdminDashboard.jsx';
 import Profile from './pages/Profile.jsx';
 
+import { testConnection } from './services/testConnection';
+
 export default function App() {
+
+  useEffect(() => {
+    testConnection();
+  }, []);
+
   return (
     <HashRouter>
       <ToastProvider>
         <AuthProvider>
           <div className="app-shell">
             <Navbar />
+
             <main className="app-main">
               <Routes>
                 <Route path="/login" element={<Login />} />
@@ -42,6 +45,7 @@ export default function App() {
                     </ProtectedRoute>
                   }
                 />
+
                 <Route
                   path="/report"
                   element={
@@ -50,6 +54,7 @@ export default function App() {
                     </ProtectedRoute>
                   }
                 />
+
                 <Route
                   path="/items/:id"
                   element={
@@ -58,6 +63,7 @@ export default function App() {
                     </ProtectedRoute>
                   }
                 />
+
                 <Route
                   path="/my-items"
                   element={
@@ -66,6 +72,7 @@ export default function App() {
                     </ProtectedRoute>
                   }
                 />
+
                 <Route
                   path="/my-claims"
                   element={
@@ -74,6 +81,7 @@ export default function App() {
                     </ProtectedRoute>
                   }
                 />
+
                 <Route
                   path="/profile"
                   element={
@@ -82,6 +90,7 @@ export default function App() {
                     </ProtectedRoute>
                   }
                 />
+
                 <Route
                   path="/admin"
                   element={
@@ -94,6 +103,7 @@ export default function App() {
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </main>
+
             <Footer />
           </div>
         </AuthProvider>
