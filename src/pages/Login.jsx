@@ -1,7 +1,4 @@
-/**
- * src/pages/Login.jsx
- * Split-layout Sign In page with navy SVG illustration panel and password visibility toggle.
- */
+
 
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
@@ -22,25 +19,33 @@ export default function Login() {
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
 
+  // Redirect authenticated users to the home page.
   useEffect(() => {
     if (isAuthenticated) {
       navigate('/', { replace: true });
     }
   }, [isAuthenticated, navigate]);
 
-  const handleSubmit = (e) => {
+  // Handle login using Supabase authentication.
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     const validation = validateLoginForm({ email, password });
+
     if (!validation.isValid) {
       setErrors(validation.errors);
       return;
     }
 
     setSubmitting(true);
+
     try {
-      const loggedIn = login(email, password);
+      const loggedIn = await login(email, password);
+
       toast.success(`Welcome back, ${loggedIn.name}!`);
+
       const destination = location.state?.from || '/';
+
       navigate(destination, { replace: true });
     } catch (err) {
       toast.error(err.message);
@@ -49,6 +54,7 @@ export default function Login() {
     }
   };
 
+  // Fill demo credentials.
   const fillDemo = (demoEmail, demoPassword) => {
     setEmail(demoEmail);
     setPassword(demoPassword);
@@ -60,6 +66,7 @@ export default function Login() {
       <div className="row justify-content-center">
         <div className="col-12 col-xl-10">
           <div className="auth-split-card row g-0">
+
             {/* Left Illustration Panel */}
             <div className="col-12 col-lg-5 auth-illustration-panel">
               <div>
@@ -67,11 +74,14 @@ export default function Login() {
                   <span className="campus-brand-badge">
                     <i className="bi bi-compass-fill" aria-hidden="true" />
                   </span>
+
                   <span className="fw-bold fs-5">CampusFind</span>
                 </div>
+
                 <h2 className="h4 text-white mb-2">
                   Reuniting lost belongings across campus
                 </h2>
+
                 <p className="small opacity-75 mb-4">
                   A verified directory for students, faculty, and campus administrators.
                 </p>
@@ -83,16 +93,36 @@ export default function Login() {
 
               <ul className="list-unstyled small mb-0 d-flex flex-column gap-2 mt-3">
                 <li className="d-flex align-items-center gap-2">
-                  <i className="bi bi-check-circle-fill" style={{ color: 'var(--sky)' }} aria-hidden="true" />
-                  <span>Post lost or found reports with compressed photos</span>
+                  <i
+                    className="bi bi-check-circle-fill"
+                    style={{ color: 'var(--sky)' }}
+                    aria-hidden="true"
+                  />
+                  <span>
+                    Post lost or found reports with compressed photos
+                  </span>
                 </li>
+
                 <li className="d-flex align-items-center gap-2">
-                  <i className="bi bi-check-circle-fill" style={{ color: 'var(--sky)' }} aria-hidden="true" />
-                  <span>Verify ownership through structured proof claims</span>
+                  <i
+                    className="bi bi-check-circle-fill"
+                    style={{ color: 'var(--sky)' }}
+                    aria-hidden="true"
+                  />
+                  <span>
+                    Verify ownership through structured proof claims
+                  </span>
                 </li>
+
                 <li className="d-flex align-items-center gap-2">
-                  <i className="bi bi-check-circle-fill" style={{ color: 'var(--sky)' }} aria-hidden="true" />
-                  <span>Track status from Open to Claimed to Returned</span>
+                  <i
+                    className="bi bi-check-circle-fill"
+                    style={{ color: 'var(--sky)' }}
+                    aria-hidden="true"
+                  />
+                  <span>
+                    Track status from Open to Claimed to Returned
+                  </span>
                 </li>
               </ul>
             </div>
@@ -100,17 +130,23 @@ export default function Login() {
             {/* Right Form Panel */}
             <div className="col-12 col-lg-7 p-4 p-md-5 bg-white">
               <div className="mb-4">
-                <h1 className="h3 mb-1">Sign In to CampusFind</h1>
+                <h1 className="h3 mb-1">
+                  Sign In to CampusFind
+                </h1>
+
                 <p className="text-muted-campus small mb-0">
                   Enter your campus email and password to access the lost &amp; found board.
                 </p>
               </div>
 
               <form onSubmit={handleSubmit} noValidate>
+
+                {/* Email */}
                 <div className="mb-3">
                   <label htmlFor="login-email" className="form-label">
                     Campus Email
                   </label>
+
                   <input
                     id="login-email"
                     type="email"
@@ -119,16 +155,26 @@ export default function Login() {
                     value={email}
                     onChange={(e) => {
                       setEmail(e.target.value);
-                      if (errors.email) setErrors((p) => ({ ...p, email: '' }));
+
+                      if (errors.email) {
+                        setErrors((p) => ({ ...p, email: '' }));
+                      }
                     }}
                   />
-                  {errors.email && <div className="invalid-feedback">{errors.email}</div>}
+
+                  {errors.email && (
+                    <div className="invalid-feedback">
+                      {errors.email}
+                    </div>
+                  )}
                 </div>
 
+                {/* Password */}
                 <div className="mb-4">
                   <label htmlFor="login-password" className="form-label">
                     Password
                   </label>
+
                   <div className="input-group">
                     <input
                       id="login-password"
@@ -138,24 +184,37 @@ export default function Login() {
                       value={password}
                       onChange={(e) => {
                         setPassword(e.target.value);
-                        if (errors.password) setErrors((p) => ({ ...p, password: '' }));
+
+                        if (errors.password) {
+                          setErrors((p) => ({ ...p, password: '' }));
+                        }
                       }}
                     />
+
                     <button
                       type="button"
                       className="btn btn-outline-secondary"
                       style={{ borderColor: 'var(--border)' }}
-                      aria-label={showPassword ? 'Hide password' : 'Show password'}
+                      aria-label={
+                        showPassword ? 'Hide password' : 'Show password'
+                      }
                       onClick={() => setShowPassword((prev) => !prev)}
                     >
-                      <i className={`bi ${showPassword ? 'bi-eye-slash' : 'bi-eye'}`} aria-hidden="true" />
+                      <i
+                        className={`bi ${showPassword ? 'bi-eye-slash' : 'bi-eye'}`}
+                        aria-hidden="true"
+                      />
                     </button>
+
                     {errors.password && (
-                      <div className="invalid-feedback">{errors.password}</div>
+                      <div className="invalid-feedback">
+                        {errors.password}
+                      </div>
                     )}
                   </div>
                 </div>
 
+                {/* Submit Button */}
                 <button
                   type="submit"
                   className="btn btn-campus-primary w-100 mb-3"
@@ -163,7 +222,10 @@ export default function Login() {
                 >
                   {submitting ? (
                     <>
-                      <span className="spinner-border spinner-border-sm me-2" role="status" />
+                      <span
+                        className="spinner-border spinner-border-sm me-2"
+                        role="status"
+                      />
                       Signing in...
                     </>
                   ) : (
@@ -172,41 +234,63 @@ export default function Login() {
                 </button>
               </form>
 
+              {/* Register Link */}
               <div className="text-center small text-muted-campus mb-4">
                 New to CampusFind?{' '}
-                <Link to="/register" className="fw-semibold text-decoration-none">
+
+                <Link
+                  to="/register"
+                  className="fw-semibold text-decoration-none"
+                >
                   Create an account
                 </Link>
               </div>
 
-              <div className="pt-3 border-top" style={{ borderColor: 'var(--border)' }}>
-                <div className="small fw-semibold mb-2" style={{ color: 'var(--navy)' }}>
+              {/* Demo Credentials */}
+              <div
+                className="pt-3 border-top"
+                style={{ borderColor: 'var(--border)' }}
+              >
+                <div
+                  className="small fw-semibold mb-2"
+                  style={{ color: 'var(--navy)' }}
+                >
                   Demo Credentials (Quick Fill)
                 </div>
+
                 <div className="d-flex flex-wrap gap-2">
                   <button
                     type="button"
                     className="btn btn-sm btn-campus-outline"
-                    onClick={() => fillDemo('student@campus.com', 'student123')}
+                    onClick={() =>
+                      fillDemo('student@campus.com', 'student123')
+                    }
                   >
                     Student Demo
                   </button>
+
                   <button
                     type="button"
                     className="btn btn-sm btn-campus-outline"
-                    onClick={() => fillDemo('faculty@campus.com', 'faculty123')}
+                    onClick={() =>
+                      fillDemo('faculty@campus.com', 'faculty123')
+                    }
                   >
                     Faculty Demo
                   </button>
+
                   <button
                     type="button"
                     className="btn btn-sm btn-campus-outline"
-                    onClick={() => fillDemo('admin@campus.com', 'admin123')}
+                    onClick={() =>
+                      fillDemo('admin@campus.com', 'admin123')
+                    }
                   >
                     Admin Demo
                   </button>
                 </div>
               </div>
+
             </div>
           </div>
         </div>

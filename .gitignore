@@ -6,3 +6,7 @@ coverage/
 *.log
 .env*
 !.env.example
+Harshal.009!
+
+VITE_SUPABASE_URL=zfjkqddibcnhbsalohps
+VITE_SUPABASE_ANON_KEY=sb_publishable_RlGXBeIj_IPKsXlTtGWfOA_a87SrHr3
