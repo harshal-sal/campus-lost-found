@@ -175,9 +175,11 @@ export default function ItemDetails() {
 
       // 4. Update React state
       setItem({
-        ...itemData,
-        image: imageUrl,
-      });
+        
+  ...itemData,
+  image: imageUrl,
+  imagePath: itemData.image,
+});
 
       setCategory(categoryResult.data);
       setLocation(locationResult.data);

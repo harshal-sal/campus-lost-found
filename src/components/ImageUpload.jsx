@@ -1,8 +1,4 @@
-/**
- * src/components/ImageUpload.jsx
- * Optional drag-and-drop image picker with 5MB/type validation,
- * browser canvas compression (max 800px wide, JPEG 0.7), live preview, and remove button.
- */
+
 
 import React, { useState, useRef } from 'react';
 import { compressItemImage } from '../utils/image.js';
@@ -74,7 +70,7 @@ export default function ImageUpload({ value, onChange }) {
                 Photo attached
               </div>
               <div className="small text-muted-campus mb-2">
-                Compressed and stored locally with your report.
+                Compressed and ready to upload securely.
               </div>
               <div className="d-flex flex-wrap gap-2">
                 <button
